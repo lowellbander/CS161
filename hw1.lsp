@@ -57,7 +57,17 @@
   )
 )
 
-(defun SUB-LIST (L START LEN))
+; SUB-LIST takes as its argument a list L, a starting index START, and a length
+; LEN, and returns a sublist of L of length LEN such that the first element is
+; the START'th element in L
+(defun SUB-LIST (L START LEN)
+  (cond
+    ((equal LEN 0) NIL)
+    ((> START 0) (SUB-LIST (cdr L) (- START 1) LEN))
+    (t (cons (car L) (SUB-LIST (cdr L) 0 (- LEN 1))))
+  )
+)
+
 (defun SPLIT-LIST (L))
 (defun BTREE-HEIGHT (TREE))
 (defun LIST2BTREE (LEAVES))
@@ -81,5 +91,11 @@
     (equal (TREE-ORDER 3) '(3))
     (equal (TREE-ORDER '(1 2 3)) '( 1 2 3))
     (equal (TREE-ORDER '((1 2 3) 7 8)) '(1 2 3 7 8))
+
+    (equal (SUB-LIST '(1 2 3) 0 3) '(1 2 3))
+    (equal (SUB-LIST '(a b c d) 0 3) '(a b c))
+    (equal (SUB-LIST '(a b c d) 3 1) '(d))
+    (equal (SUB-LIST '(a b c d) 2 0) NIL)
+
   )
 )
