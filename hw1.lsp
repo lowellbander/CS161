@@ -90,7 +90,24 @@
   )
 )
 
-(defun BTREE-HEIGHT (TREE))
+; BTREE takes as its argument a binary tree TREE, and returns the length of the
+; longest path from the root node to the farthest leaf node.
+(defun BTREE-HEIGHT (TREE)
+  (cond
+    ((numberp TREE) 0)
+    (
+      t
+      (cond
+        (
+         (> (BTREE-HEIGHT (car TREE)) (BTREE-HEIGHT (cadr TREE)))
+         (+ 1 (BTREE-HEIGHT (car TREE)))
+        )
+        (t (+ 1 (BTREE-HEIGHT (cadr TREE))))
+      )
+    )
+  )
+)
+
 (defun LIST2BTREE (LEAVES))
 (defun BTREE2LIST (TREE))
 
@@ -121,5 +138,11 @@
     (equal (SPLIT-LIST '(a b c d)) '((a b) (c d)))
     (equal (SPLIT-LIST '(a b c d e)) '((a b) (c d e)))
     (equal (SPLIT-LIST '(a b c d e f)) '((a b c) (d e f)))
+
+    (equal (BTREE-HEIGHT 1) 0)
+    (equal (BTREE-HEIGHT '(1 2)) 1)
+    (equal (BTREE-HEIGHT '(1 (2 3))) 2)
+    (equal (BTREE-HEIGHT '((1 2) (3 4))) 2)
+    (equal (BTREE-HEIGHT '((1 (2 3)) ((4 5) (6 7)))) 3)
   )
 )
