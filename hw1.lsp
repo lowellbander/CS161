@@ -42,8 +42,21 @@
   )
 )
 
+; TREE-ORDER takes as its argument an ordered tree TREE, and returns an in-order
+; list of the elements in TREE.
+(defun TREE-ORDER (TREE)
+  (cond
+    ((numberp TREE) (list TREE))
+    (
+     t
+     (append
+       (TREE-ORDER (car TREE))
+       (cons (cadr TREE) (TREE-ORDER (caddr TREE)))
+     )
+    )
+  )
+)
 
-(defun TREE-ORDER (TREE))
 (defun SUB-LIST (L START LEN))
 (defun SPLIT-LIST (L))
 (defun BTREE-HEIGHT (TREE))
@@ -65,5 +78,8 @@
     (equal (TREE-MAX '((1 2 3) 7 8)) 8)
     (equal (TREE-MAX '((1 2 3) 7 (8 9 10))) 10)
 
+    (equal (TREE-ORDER 3) '(3))
+    (equal (TREE-ORDER '(1 2 3)) '( 1 2 3))
+    (equal (TREE-ORDER '((1 2 3) 7 8)) '(1 2 3 7 8))
   )
 )
