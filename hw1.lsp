@@ -33,7 +33,16 @@
   )
 )
 
-(defun TREE-MAX (TREE))
+; TREE-MAX takes as its argument an ordered tree TREE, and returns the largest 
+; number in TREE.
+(defun TREE-MAX (TREE)
+  (cond
+    ((numberp TREE) TREE)
+    (t (TREE-MAX (caddr TREE)))
+  )
+)
+
+
 (defun TREE-ORDER (TREE))
 (defun SUB-LIST (L START LEN))
 (defun SPLIT-LIST (L))
@@ -52,6 +61,9 @@
     (TREE-CONTAINS 3 '((1 2 3) 7 8))
     (not (TREE-CONTAINS 4 '((1 2 3) 7 8)))
     (TREE-CONTAINS 2 '(1 2 3))
+
+    (equal (TREE-MAX '((1 2 3) 7 8)) 8)
+    (equal (TREE-MAX '((1 2 3) 7 (8 9 10))) 10)
 
   )
 )
