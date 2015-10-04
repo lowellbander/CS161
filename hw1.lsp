@@ -68,7 +68,28 @@
   )
 )
 
-(defun SPLIT-LIST (L))
+; SPLIT-LIST takes as its argument a list L, and returns a list of two lists
+; L1 and L2 such that `(and (equal L (append L1 L2)) (or (equal 0 (- (length L2)
+; (length L1))) (equal 1 (- (length L2) (length L1)))))` is true.
+(defun SPLIT-LIST (L)
+  (cond
+    (
+     (evenp (length L))
+     (list
+       (SUB-LIST L 0 (/ (length L) 2))
+       (SUB-LIST L (/ (length L) 2) (- (length L) (/ (length L) 2)))
+      )
+    )
+    (
+      t
+      (list
+        (SUB-LIST L 0 (/ (- (length L) 1) 2))
+        (SUB-LIST L (/ (- (length L) 1) 2) (- (length L) (/ (- (length L) 1) 2)))
+      )
+    )
+  )
+)
+
 (defun BTREE-HEIGHT (TREE))
 (defun LIST2BTREE (LEAVES))
 (defun BTREE2LIST (TREE))
@@ -97,5 +118,8 @@
     (equal (SUB-LIST '(a b c d) 3 1) '(d))
     (equal (SUB-LIST '(a b c d) 2 0) NIL)
 
+    (equal (SPLIT-LIST '(a b c d)) '((a b) (c d)))
+    (equal (SPLIT-LIST '(a b c d e)) '((a b) (c d e)))
+    (equal (SPLIT-LIST '(a b c d e f)) '((a b c) (d e f)))
   )
 )
