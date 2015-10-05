@@ -110,9 +110,53 @@
 
 (defun LIST2BTREE (LEAVES)
   (cond
-    ((numberp (car LEAVES)) LEAVES)
+    ((equal (length LEAVES) 1) (car LEAVES))
+    ((equal (length LEAVES) 2) LEAVES)
+    (t (list (LIST2BTREE (car (SPLIT-LIST LEAVES))) (LIST2BTREE (cadr (SPLIT-LIST LEAVES)))))
   )
 )
 
 (defun BTREE2LIST (TREE))
 
+; TESTS
+
+(defun tests ()
+  (and
+
+    (TREE-CONTAINS 3 3)
+    (TREE-CONTAINS 3 '(3 4 5))
+    (not (TREE-CONTAINS 1 '(3 4 5)))
+    (TREE-CONTAINS 3 '((1 2 3) 7 8))
+    (not (TREE-CONTAINS 4 '((1 2 3) 7 8)))
+    (TREE-CONTAINS 2 '(1 2 3))
+
+    (equal (TREE-MAX '((1 2 3) 7 8)) 8)
+    (equal (TREE-MAX '((1 2 3) 7 (8 9 10))) 10)
+
+    (equal (TREE-ORDER 3) '(3))
+    (equal (TREE-ORDER '(1 2 3)) '( 1 2 3))
+    (equal (TREE-ORDER '((1 2 3) 7 8)) '(1 2 3 7 8))
+
+    (equal (SUB-LIST '(1 2 3) 0 3) '(1 2 3))
+    (equal (SUB-LIST '(a b c d) 0 3) '(a b c))
+    (equal (SUB-LIST '(a b c d) 3 1) '(d))
+    (equal (SUB-LIST '(a b c d) 2 0) NIL)
+
+    (equal (SPLIT-LIST '(a b c d)) '((a b) (c d)))
+    (equal (SPLIT-LIST '(a b c d e)) '((a b) (c d e)))
+    (equal (SPLIT-LIST '(a b c d e f)) '((a b c) (d e f)))
+
+    (equal (BTREE-HEIGHT 1) 0)
+    (equal (BTREE-HEIGHT '(1 2)) 1)
+    (equal (BTREE-HEIGHT '(1 (2 3))) 2)
+    (equal (BTREE-HEIGHT '((1 2) (3 4))) 2)
+    (equal (BTREE-HEIGHT '((1 (2 3)) ((4 5) (6 7)))) 3)
+
+    (equal (LIST2BTREE '(1)) '1)
+    (equal (LIST2BTREE '(1 2)) '(1 2))
+    (equal (LIST2BTREE '(1 2 3)) '(1 (2 3)))
+    (equal (LIST2BTREE '(1 2 3 4)) '((1 2) (3 4)))
+    (equal (LIST2BTREE '(1 2 3 4 5 6 7)) '((1 (2 3)) ((4 5) (6 7))))
+    (equal (LIST2BTREE '(1 2 3 4 5 6 7 8)) '(((1 2) (3 4)) ((5 6) (7 8))))
+  )
+)
