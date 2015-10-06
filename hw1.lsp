@@ -97,7 +97,14 @@
   )
 )
 
-(defun BTREE2LIST (TREE))
+; BTREE2LIST takes a binary tree TREE and flattens it into a list, such that
+; (BTREE2LIST (LIST2BTREE X)) = X for all lists of atoms X.
+(defun BTREE2LIST (TREE)
+  (cond
+    ((numberp TREE) (list TREE))
+    (t (append (BTREE2LIST (car TREE)) (BTREE2LIST (cadr TREE))))
+  )
+)
 
 ; TESTS
 
@@ -139,5 +146,12 @@
     (equal (LIST2BTREE '(1 2 3 4)) '((1 2) (3 4)))
     (equal (LIST2BTREE '(1 2 3 4 5 6 7)) '((1 (2 3)) ((4 5) (6 7))))
     (equal (LIST2BTREE '(1 2 3 4 5 6 7 8)) '(((1 2) (3 4)) ((5 6) (7 8))))
+
+    (equal (BTREE2LIST 1) '(1))
+    (equal (BTREE2LIST '(1 2)) '(1 2))
+    (equal (BTREE2LIST '(1 (2 3))) '(1 2 3))
+    (equal (BTREE2LIST '((1 2) (3 4))) '(1 2 3 4))
+    (equal (BTREE2LIST '((1 (2 3)) ((4 5) (6 7)))) '(1 2 3 4 5 6 7))
+    (equal (BTREE2LIST '(((1 2) (3 4)) ((5 6) (7 8)))) '(1 2 3 4 5 6 7 8))
   )
 )
