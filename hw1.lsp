@@ -69,7 +69,7 @@
   )
 )
 
-; BTREE takes as its argument a binary tree TREE, and returns the length of the
+; BTREE-HEIGHT takes as its argument a binary tree TREE, and returns the length of the
 ; longest path from the root node to the farthest leaf node.
 (defun BTREE-HEIGHT (TREE)
   (cond
@@ -87,6 +87,8 @@
   )
 )
 
+; LIST2BTREE takes as its argument a list of LEAVES, and returns a binary tree
+; where the leaves of the tree are in LEAVES and it is balanced.
 (defun LIST2BTREE (LEAVES)
   (cond
     ((equal (length LEAVES) 1) (car LEAVES))
