@@ -4,32 +4,11 @@
 ; returns true if N is in the TREE, else NIL.
 (defun TREE-CONTAINS (N TREE)
   (cond
-    (
-      (and
-        (numberp TREE)
-        (equal N TREE)
-      )
-      t
-    )
-    (
-      (and 
-        (numberp TREE)
-        (not (equal N TREE))
-      )
-      NIL
-    )
-    (
-      (< N (cadr TREE))
-      (TREE-CONTAINS N (car TREE))
-    )
-    (
-      (> N (cadr TREE))
-      (TREE-CONTAINS N (caddr TREE))
-    )
-    (
-      t
-      (equal N (cadr TREE))
-    )
+    ((and (numberp TREE) (equal N TREE)) t)
+    ((and (numberp TREE) (not (equal N TREE))) NIL)
+    ((< N (cadr TREE)) (TREE-CONTAINS N (car TREE)))
+    ((> N (cadr TREE)) (TREE-CONTAINS N (caddr TREE)))
+    (t (equal N (cadr TREE)))
   )
 )
 
