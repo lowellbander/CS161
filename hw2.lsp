@@ -127,10 +127,11 @@
        (> m (first  s))
        (> c (second s))
        ; cannibals eat people
-       (> (- (second s) c) (- (first s) m))
-       (> (+ (- 3 (second s)) c) (+ (- 3 (first s)) m))
-       ; boat doesn't drive itself
+       (and (not (equal 0 (- (first s) m)))(> (- (second s) c) (- (first s) m)))
+       (and (not (equal 0 (+ (- 3 (first s) m))))(> (+ (- 3 (second s)) c) (+ (- 3 (first s)) m)))
+       ; boat must have 1 or 2 passengers
        (equal 0 (+ m c))
+       (> (+ m c) 2)
      )
      NIL
     )
@@ -197,8 +198,8 @@
 
     (NULL (next-state '(3 3 T) 4 1)) ; cannot move 4 of 3 missionaries
     (NULL (next-state '(3 3 NIL) 1 4)) ; cannot move 4 of 3 cannibals
-    (NULL (next-state '(3 3 T) 3 0)) ; cannibals eat people
-    (NULL (next-state '(3 3 T) 0 3)) ; cannibals eat people
+    (NULL (next-state '(3 3 T) 2 0)) ; cannibals eat people
     (NULL (next-state '(3 3 T) 0 0)) ; boat doesn't drive itself
+    (NULL (next-state '(3 3 T) 2 2)) ; boat only has 2 spots
   )
 )
