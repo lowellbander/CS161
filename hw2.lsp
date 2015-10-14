@@ -128,7 +128,10 @@
        (> c (second s))
        ; cannibals eat people
        (and (not (equal 0 (- (first s) m)))(> (- (second s) c) (- (first s) m)))
-       (and (not (equal 0 (+ (- 3 (first s) m))))(> (+ (- 3 (second s)) c) (+ (- 3 (first s)) m)))
+       (and
+         (not (equal 0 (+ (- 3 (first s) m))))
+         (> (+ (- 3 (second s)) c) (+ (- 3 (first s)) m))
+       )
        ; boat must have 1 or 2 passengers
        (equal 0 (+ m c))
        (> (+ m c) 2)
