@@ -102,11 +102,11 @@
 
 ; Examples of calls to some of the helper functions can be found after the code.
 
-
 ; FINAL-STATE takes a single argument (S), the current state, and returns T if
 ; it is the goal state (3 3 NIL) and NIL otherwise.
 (defun final-state (s)
-  NIL)
+  (equal S '(3 3 NIL))
+)
 
 ; NEXT-STATE returns the state that results from applying an operator to the
 ; current state. It takes three arguments: the current state (S), a number of
@@ -175,3 +175,10 @@
 ; operators to the current state.
 ; (succ-fn '(3 3 t)) -> ((0 1 NIL) (1 1 NIL) (0 2 NIL))
 ; (succ-fn '(1 1 t)) -> ((3 2 NIL) (3 3 NIL))
+
+(defun test-mc ()
+  (and
+    (not (NULL (final-state '(3 3 NIL))))
+    (NULL (final-state '(3 2 NIL)))
+  )
+)
