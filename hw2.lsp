@@ -17,7 +17,7 @@
 ; depth-first search.
 (defun DFS (tree)
   (cond
-    ((NULL tree) NIL)
+    ((null tree) nil)
     ((atom (car tree)) (cons (car tree) (DFS (cdr tree))))
     (t (append (DFS (car tree)) (DFS (cdr tree))))
   )
@@ -31,8 +31,8 @@
 ; where nodes deeper than depth are ignored.
 (defun DFS-N (tree depth)
   (cond
-    ((equal depth 0) NIL)
-    ((NULL tree) NIL)
+    ((equal depth 0) nil)
+    ((null tree) nil)
     ((atom (car tree)) (cons (car tree) (DFS-N (cdr tree) depth)))
     (t (append (DFS-N (car tree) (- depth 1)) (DFS-N (cdr tree) depth)))
   )
@@ -45,7 +45,7 @@
 ; depth and ending at depth max-depth.
 (defun until (tree depth max-depth)
   (cond
-    ((> depth max-depth) NIL)
+    ((> depth max-depth) nil)
     (t (append (DFS-N tree depth) (until tree (+ depth 1) max-depth)))
   )
 )
@@ -64,7 +64,7 @@
     (equal (DFS '(a)) '(a))
     (equal (DFS '(a b c)) '(a b c))
     (equal (DFS '((a (b)) c (d))) '(a b c d))
-    (equal (DFS NIL) NIL)
+    (equal (DFS nil) nil)
 
     (equal (DFID '((a (b)) c (d)) 3) '(c a c d a b c d))
   )
@@ -105,7 +105,7 @@
 ; FINAL-STATE takes a single argument (S), the current state, and returns T if
 ; it is the goal state (3 3 NIL) and NIL otherwise.
 (defun final-state (s)
-  (equal S '(3 3 NIL))
+  (equal S '(3 3 nil))
 )
 
 ; NEXT-STATE returns the state that results from applying an operator to the
@@ -136,7 +136,7 @@
        (equal 0 (+ m c))
        (> (+ m c) 2)
      )
-     NIL
+     nil
     )
     (t (list (list (- (first s) m) (- (second s) c) (not (third s)))))
   )
@@ -161,7 +161,12 @@
 ; stack of states visited by MC-DFS (STATES). It returns T if S is a member of
 ; STATES and NIL otherwise.
 (defun on-path (s states)
-  NIL)
+  (cond
+    ((null states) nil)
+    ((equal s (car states)) t)
+    (t (on-path s (cdr states)))
+  )
+)
 
 ; MULT-DFS is a helper function for MC-DFS. It takes two arguments: the path
 ; from from the initial state to the current state (PATH), and the legal
@@ -172,7 +177,7 @@
 ; of those searches reaches the final state, MULT-DFS returns the complete path
 ; from the initial state to the goal state. Otherwise, it returns NIL.
 (defun mult-dfs (states path)
-  NIL)
+  nil)
 
 ; MC-DFS does a depth first search from a given state to the goal state. It
 ; takes two arguments: a state (S) and the path from the initial state to S
@@ -183,7 +188,7 @@
 ; ensuring that the depth-first search does not revisit a node already on the
 ; search path.
 (defun mc-dfs (s path)
-  NIL)
+  nil)
 
 ; Function execution examples
 
@@ -203,13 +208,18 @@
 
 (defun test-mc ()
   (and
-    (not (NULL (final-state '(3 3 NIL))))
-    (NULL (final-state '(3 2 NIL)))
+    (not (null (final-state '(3 3 nil))))
+    (null (final-state '(3 2 nil)))
 
-    (NULL (next-state '(3 3 T) 4 1)) ; cannot move 4 of 3 missionaries
-    (NULL (next-state '(3 3 NIL) 1 4)) ; cannot move 4 of 3 cannibals
-    (NULL (next-state '(3 3 T) 2 0)) ; cannibals eat people
-    (NULL (next-state '(3 3 T) 0 0)) ; boat doesn't drive itself
-    (NULL (next-state '(3 3 T) 2 2)) ; boat only has 2 spots
+    (null (next-state '(3 3 T) 4 1)) ; cannot move 4 of 3 missionaries
+    (null (next-state '(3 3 nil) 1 4)) ; cannot move 4 of 3 cannibals
+    (null (next-state '(3 3 T) 2 0)) ; cannibals eat people
+    (null (next-state '(3 3 T) 0 0)) ; boat doesn't drive itself
+    (null (next-state '(3 3 T) 2 2)) ; boat only has 2 spots
+
+    (null (on-path '(3 3 T) nil))
+    (on-path '(3 3 T) '((3 3 T)))
+    (on-path '(3 3 T) '((2 2 T)(3 3 T)))
+    (null (on-path '(3 3 T) '((2 2 T)(2 3 T))))
   )
 )
