@@ -121,7 +121,22 @@
 ; NOTE that next-state returns a list containing the successor state (which is
 ; itself a list); the return should look something like ((1 1 T)).
 (defun next-state (s m c)
-  NIL)
+  (cond
+    ((or
+       ; you can't move more folks than are on this side of the river
+       (> m (first  s))
+       (> c (second s))
+       ; cannibals eat people
+       (> (- (second s) c) (- (first s) m))
+       (> (+ (- 3 (second s)) c) (+ (- 3 (first s)) m))
+       ; boat doesn't drive itself
+       (equal 0 (+ m c))
+     )
+     NIL
+    )
+    (t (list (- (first s) m) (- (second s) c) (not (third s))))
+  )
+)
 
 ; SUCC-FN returns all of the possible legal successor states to the current
 ; state. It takes a single argument (S), which encodes the current state, and
@@ -159,7 +174,6 @@
 (defun mc-dfs (s path)
   NIL)
 
-
 ; Function execution examples
 
 ; Applying this operator would result in an invalid state, with more cannibals
@@ -180,5 +194,11 @@
   (and
     (not (NULL (final-state '(3 3 NIL))))
     (NULL (final-state '(3 2 NIL)))
+
+    (NULL (next-state '(3 3 T) 4 1)) ; cannot move 4 of 3 missionaries
+    (NULL (next-state '(3 3 NIL) 1 4)) ; cannot move 4 of 3 cannibals
+    (NULL (next-state '(3 3 T) 3 0)) ; cannibals eat people
+    (NULL (next-state '(3 3 T) 0 3)) ; cannibals eat people
+    (NULL (next-state '(3 3 T) 0 0)) ; boat doesn't drive itself
   )
 )
