@@ -138,7 +138,7 @@
      )
      NIL
     )
-    (t (list (- (first s) m) (- (second s) c) (not (third s))))
+    (t (list (list (- (first s) m) (- (second s) c) (not (third s)))))
   )
 )
 
@@ -147,7 +147,8 @@
 ; returns a list of states that can be reached by applying legal operators to
 ; the current state.
 (defun succ-fn (s)
-  NIL)
+  
+)
 
 ; ON-PATH checks whether the current state is on the stack of states visited by
 ; this depth-first search. It takes two arguments: the current state (S) and the
