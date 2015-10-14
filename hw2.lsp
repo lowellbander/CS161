@@ -18,8 +18,15 @@
   )
 )
 
-(defun DFID (tree max-depth)
+(defun until (tree depth max-depth)
+  (cond
+    ((> depth max-depth) NIL)
+    (t (append (DFS-N tree depth) (until tree (+ depth 1) max-depth)))
+  )
+)
 
+(defun DFID (tree max-depth)
+  (until tree 1 max-depth)
 )
 
 (defun tests ()
@@ -28,6 +35,8 @@
     (equal (DFS '(a b c)) '(a b c))
     (equal (DFS '((a (b)) c (d))) '(a b c d))
     (equal (DFS NIL) NIL)
+
+    (equal (DFID '((a (b)) c (d)) 3) '(c a c d a b c d))
   )
 )
 
