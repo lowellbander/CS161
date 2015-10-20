@@ -212,7 +212,8 @@
 ; admissible heuristic.
 ;
 (defun h0 (s)
-  )
+  0
+)
 
 ; EXERCISE: Modify this function to compute the
 ; number of misplaced boxes in s.
