@@ -175,11 +175,11 @@
 ; this function as the goal testing function, A* will never
 ; terminate until the whole search space is exhausted.
 ;
-; If there is a "2" on the map, return nil. Else, return true.
+; If there is a box on the map, return nil. Else, return true.
 (defun goal-test (s)
   (cond
     ((null s) t) ; an empty map doesn't have boxes on non-goal squares
-    ((has 2 (first s)) nil)
+    ((has box (first s)) nil)
     (t (goal-test (rest s)))
   )
 );end defun
@@ -233,7 +233,19 @@
 ; number of misplaced boxes in s.
 ;
 (defun h1 (s)
+  (cond
+    ((null s) 0)
+    (t (+ (countBoxes (first s) 0) (h1 (rest s))))
   )
+)
+
+(defun countBoxes (row carry)
+  (cond
+    ((null row) carry)
+    ((isBox (first row)) (countBoxes (rest row) (+ 1 carry)))
+    (t (countBoxes (rest row) carry))
+  )
+)
 
 ; EXERCISE: Change the name of this function to h<UID> where
 ; <UID> is your actual student ID number. Then, modify this

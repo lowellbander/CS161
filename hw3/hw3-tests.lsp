@@ -24,5 +24,15 @@
   )
 )
 
+(define-test countBoxes
+  (assert-equal 3 (countBoxes '(0 1 2 3 4 2 5 6 2) 0))
+)
+
+(define-test h1
+  (assert-equal 3 (h1 '((1 2 3)
+                        (3 1 2)
+                        (2 3 1))))
+)
+
 (run-tests)
 
