@@ -235,8 +235,23 @@
 
 (defun outOfBounds (s r c)
   (cond 
-    ((or (< r 0) (< c 0) (> r (length s)) (> c (length (first s)))) t)
+    ((or (< r 0) (< c 0) (> r (- (length s) 1)) (> c (- (length (first s)) 1))) t)
     (t nil)
+  )
+)
+
+(defun set-square (s r c v)
+  (cond
+    ((outOfBounds s r c) nil)
+    ((> r 0) (cons (first s) (set-square (rest s) (- r 1) c v)))
+    (t (append (list (set-value (first s) c v)) (rest s)))
+  )
+)
+
+(defun set-value (items index value)
+  (cond
+    ((> index 0) (cons (first items) (set-value (rest items) (- index 1) value)))
+    (t (cons value (rest items)))
   )
 )
 
