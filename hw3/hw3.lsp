@@ -175,9 +175,23 @@
 ; this function as the goal testing function, A* will never
 ; terminate until the whole search space is exhausted.
 ;
+; If there is a "2" on the map, return nil. Else, return true.
 (defun goal-test (s)
-  nil
-  );end defun
+  (cond
+    ((null s) t) ; an empty map doesn't have boxes on non-goal squares
+    ((has 2 (first s)) nil)
+    (t (goal-test (rest s)))
+  )
+);end defun
+
+(defun has (item items)
+  (cond
+    ((null items) nil)
+    ((equal item (first items)) t)
+    (t (has item (rest items)))
+  )
+)
+
 
 ; EXERCISE: Modify this function to return the list of
 ; sucessor states of s.
