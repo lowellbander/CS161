@@ -256,8 +256,31 @@
 ; The Lisp 'time' function can be used to measure the
 ; running time of a function call.
 ;
-(defun hUID (s)
+; For each row, compute the absolute value of the difference between how many
+; boxes there are in that row and how many goals there are in that row. Then
+; return the sum of all of these row differences.
+(defun h204156534 (s)
+  (cond
+    ((null s) 0)
+    (t (+ (delta (first s) 0 0) (h204156534 (rest s))))
   )
+)
+
+(defun delta (row boxCarry goalCarry)
+  (cond
+    ((null row) (absolute (- boxCarry goalCarry)))
+    ((isBox (first row)) (delta (rest row) (+ 1 boxCarry) goalCarry))
+    ((isStar (first row)) (delta (rest row) boxCarry (+ 1 goalCarry)))
+    (t (delta (rest row) boxCarry goalCarry))
+  )
+)
+
+(defun absolute (number)
+  (cond
+    ((< number 0) (- number))
+    (t number)
+  )
+)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

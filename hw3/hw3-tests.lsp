@@ -34,5 +34,15 @@
                         (2 3 1))))
 )
 
+(define-test absolute
+  (assert-equal 5 (absolute 5))
+  (assert-equal 5 (absolute -5))
+)
+
+(define-test delta
+  (assert-equal 3 (delta '(1 2 1 2 4 1 2 5 2) 0 0))
+  (assert-equal 3 (delta '(1 4 1 4 2 1 4 5 4) 0 0))
+)
+
 (run-tests)
 
