@@ -44,5 +44,18 @@
   (assert-equal 3 (delta '(1 4 1 4 2 1 4 5 4) 0 0))
 )
 
+(define-test outOfBounds
+  (assert-true (outOfBounds '((1 1 1)(1 1 1)(1 1 1)) -1 1))
+  (assert-true (outOfBounds '((1 1 1)(1 1 1)(1 1 1)) 1 -1))
+  (assert-true (outOfBounds '((1 1 1)(1 1 1)(1 1 1)) 1 4))
+  (assert-true (outOfBounds '((1 1 1)(1 1 1)(1 1 1)) 4 1))
+  (assert-false (outOfBounds '((1 1 1)(1 1 1)(1 1 1)) 1 1))
+)
+
+(define-test get-square
+  (assert-equal 1 (get-square '((1 2 3)(1 3 2)(2 2 2)) 0 0))
+  (assert-false (get-square '((1 2 3)(1 3 2)(2 2 2)) 4 0))
+)
+
 (run-tests)
 

@@ -212,15 +212,33 @@
 ; Any NIL result returned from try-move can be removed by cleanUpList.
 ;
 (defun next-states (s)
-  (let* ((pos (getKeeperPosition s 0))
-	 (x (car pos))
-	 (y (cadr pos))
-	 ;x and y are now the coordinate of the keeper in s.
-	 (result nil)
-	 )
+  (let* (
+      (pos (getKeeperPosition s 0))
+	    (x (car pos))
+	    (y (cadr pos))
+	    (result nil)
+	  )
+
     (cleanUpList result);end
+
    );end let
   );
+
+(defun get-square (s r c)
+  (cond
+    ((outOfBounds s r c) nil)
+    ((> r 0) (get-square (rest s) (- r 1) c))
+    ((> c 0) (get-square (list (rest (first s))) r (- c 1)))
+    (t (first (first s)))
+  )
+)
+
+(defun outOfBounds (s r c)
+  (cond 
+    ((or (< r 0) (< c 0) (> r (length s)) (> c (length (first s)))) t)
+    (t nil)
+  )
+)
 
 ; EXERCISE: Modify this function to compute the trivial
 ; admissible heuristic.
