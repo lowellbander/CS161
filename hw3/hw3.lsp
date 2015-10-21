@@ -239,7 +239,10 @@
         (equal direction 'up)
         (cond 
           ((isEmpty above) (moveKeeper state (-- y) x))
-          (()())
+          (
+            (isBoxish above)
+            (moveKeeper (moveBox state (list x (-- y)) (-- (-- y)) x) (-- y) x)
+          )
           (t nil)
         )
       )
@@ -252,34 +255,46 @@
 )
 
 (defun moveBox (state position row column)
-  (let* (
-      (x (first position))
-      (y (second position))
-      (boxOld (cond ((isBox (get-square state y x)) blank) (t star)))
-      (boxNew 
-        (cond ((isStar (get-square state row column)) boxstar) (t box))
+  (cond 
+    (
+      (isEmpty (get-square state row column))
+      (let* (
+          (x (first position))
+          (y (second position))
+          (boxOld (cond ((isBox (get-square state y x)) blank) (t star)))
+          (boxNew 
+            (cond ((isStar (get-square state row column)) boxstar) (t box))
+          )
+        )
+        (set-square (set-square state row column boxNew) y x boxOld)
       )
     )
-    (set-square (set-square state row column boxNew) y x boxOld)
+    (t nil)
   )
 )
 
 ; assumes that keeper can occupy the desired square
 (defun moveKeeper (state row column)
-  (let* (
-      (position (getKeeperPosition state 0))
-	    (x (car position))
-	    (y (cadr position))
-      (keeperOld (cond ((isKeeper (get-square state y x)) blank) (t star)))
-      (keeperNew 
-        (cond ((isStar (get-square state row column)) keeperstar) (t keeper))
+  (cond 
+    ((null state) nil)
+    (t
+      (let* (
+          (position (getKeeperPosition state 0))
+	        (x (car position))
+	        (y (cadr position))
+          (keeperOld (cond ((isKeeper (get-square state y x)) blank) (t star)))
+          (keeperNew 
+            (cond ((isStar (get-square state row column)) keeperstar) (t keeper))
+          )
+        )
+        (set-square (set-square state row column keeperNew) y x keeperOld)
       )
     )
-    (set-square (set-square state row column keeperNew) y x keeperOld)
   )
 )
 
 (defun isEmpty (square) (or (isBlank square) (isStar square)))
+(defun isBoxish (square) (or (isBox square) (isBoxStar square)))
 (defun ++ (number) (+ number 1))
 (defun -- (number) (- number 1))
 
