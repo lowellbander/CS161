@@ -224,6 +224,48 @@
    );end let
   );
 
+(defun try-move (state direction)
+  (let* (
+      (position (getKeeperPosition state 0))
+	    (x (car position))
+	    (y (cadr position))
+      (above (get-square state (-- y) x))
+      (below (get-square state (++ y) x))
+      (onleft (get-square state y (-- x)))
+      (onright (get-square state y (++ x)))
+    )
+    (cond
+      (
+        (equal direction 'up)
+        (cond 
+          ((isEmpty above) (moveKeeper state (-- y) x))
+          (()())
+          (t nil)
+        )
+      )
+      ((equal direction 'down) t)
+      ((equal direction 'left) t)
+      ((equal direction 'right) t)
+      (t nil)
+    )
+  )
+)
+
+(defun moveKeeper (state row column)
+  (let* (
+      (position (getKeeperPosition state 0))
+	    (x (car position))
+	    (y (cadr position))
+      (keeperOn (cond ((isKeeper (get-square state y x)) blank) (t star)))
+    )
+    (set-square (set-square state row column keeper) y x keeperOn)
+  )
+)
+
+(defun isEmpty (square) (or (isBlank square) (isStar square)))
+(defun ++ (number) (+ number 1))
+(defun -- (number) (- number 1))
+
 (defun get-square (s r c)
   (cond
     ((outOfBounds s r c) nil)
