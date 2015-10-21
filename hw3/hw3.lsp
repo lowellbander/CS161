@@ -86,31 +86,31 @@
 
 ; Some helper functions for checking the content of a square
 (defun isBlank (v)
-  (= v blank)
+  (equal v blank)
   )
 
 (defun isWall (v)
-  (= v wall)
+  (equal v wall)
   )
 
 (defun isBox (v)
-  (= v box)
+  (equal v box)
   )
 
 (defun isKeeper (v)
-  (= v keeper)
+  (equal v keeper)
   )
 
 (defun isStar (v)
-  (= v star)
+  (equal v star)
   )
 
 (defun isBoxStar (v)
-  (= v boxstar)
+  (equal v boxstar)
   )
 
 (defun isKeeperStar (v)
-  (= v keeperstar)
+  (equal v keeperstar)
   )
 
 ;
@@ -212,17 +212,15 @@
 ; Any NIL result returned from try-move can be removed by cleanUpList.
 ;
 (defun next-states (s)
-  (let* (
-      (pos (getKeeperPosition s 0))
-	    (x (car pos))
-	    (y (cadr pos))
-	    (result nil)
-	  )
-
-    (cleanUpList result);end
-
-   );end let
-  );
+  (cleanUpList 
+    (list 
+      (try-move s 'up) 
+      (try-move s 'down) 
+      (try-move s 'left) 
+      (try-move s 'right)
+    )
+  )
+);
 
 (defun try-move (state direction)
   (let* (
@@ -246,9 +244,39 @@
           (t nil)
         )
       )
-      ((equal direction 'down) t)
-      ((equal direction 'left) t)
-      ((equal direction 'right) t)
+      (
+        (equal direction 'down)
+        (cond 
+          ((isEmpty below) (moveKeeper state (++ y) x))
+          (
+            (isBoxish below)
+            (moveKeeper (moveBox state (list x (++ y)) (++ (++ y)) x) (++ y) x)
+          )
+          (t nil)
+        )
+      )
+      (
+        (equal direction 'left)
+        (cond 
+          ((isEmpty onLeft) (moveKeeper state y (-- x)))
+          (
+            (isBoxish onLeft)
+            (moveKeeper (moveBox state (list (-- x) y) y (-- (-- x))) y (-- x))
+          )
+          (t nil)
+        )
+      )
+      (
+       (equal direction 'right)
+       (cond 
+         ((isEmpty onRight) (moveKeeper state y (++ x)))
+         (
+           (isBoxish onRight)
+           (moveKeeper (moveBox state (list (++ x) y) y (++ (++ x))) y (++ x))
+         )
+         (t nil)
+       )
+      )
       (t nil)
     )
   )
