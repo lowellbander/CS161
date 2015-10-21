@@ -184,6 +184,7 @@
   )
 );end defun
 
+; HAS returns TRUE if ITEM is in ITEMS, else NIL.
 (defun has (item items)
   (cond
     ((null items) nil)
@@ -205,11 +206,19 @@
 ; A pseudo-code for this is:
 ;
 ; ...
-; (result (list (try-move s UP) (try-move s DOWN) (try-move s LEFT) (try-move s RIGHT)))
+; (result
+;   (list
+;     (try-move s UP)
+;     (try-move s DOWN)
+;     (try-move s LEFT)
+;     (try-move s RIGHT)
+;   )
+; )
 ; ...
 ; 
-; You will need to define the function try-move and decide how to represent UP,DOWN,LEFT,RIGHT.
-; Any NIL result returned from try-move can be removed by cleanUpList.
+; You will need to define the function try-move and decide how to represent UP,
+; DOWN, LEFT, RIGHT. Any NIL result returned from try-move can be removed by
+; cleanUpList.
 ;
 (defun next-states (s)
   (cleanUpList 
@@ -222,24 +231,28 @@
   )
 );
 
+; TRY-MOVE attempts to move the keeper in the DIRECTION given, either 'up,
+; 'down, 'left, or 'right. STATE is the representation of the game. This
+; function returns NIL if the move is not possible; otherwise, it returns
+; the new state of the game
 (defun try-move (state direction)
   (let* (
       (position (getKeeperPosition state 0))
 	    (x (car position))
 	    (y (cadr position))
-      (above (get-square state (-- y) x))
-      (below (get-square state (++ y) x))
-      (onleft (get-square state y (-- x)))
-      (onright (get-square state y (++ x)))
+      (above (get-square state (decrement y) x))
+      (below (get-square state (increment y) x))
+      (onleft (get-square state y (decrement x)))
+      (onright (get-square state y (increment x)))
     )
     (cond
       (
         (equal direction 'up)
         (cond 
-          ((isEmpty above) (moveKeeper state (-- y) x))
+          ((isEmpty above) (moveKeeper state (decrement y) x))
           (
             (isBoxish above)
-            (moveKeeper (moveBox state (list x (-- y)) (-- (-- y)) x) (-- y) x)
+            (moveKeeper (moveBox state (list x (decrement y)) (decrement (decrement y)) x) (decrement y) x)
           )
           (t nil)
         )
@@ -247,10 +260,10 @@
       (
         (equal direction 'down)
         (cond 
-          ((isEmpty below) (moveKeeper state (++ y) x))
+          ((isEmpty below) (moveKeeper state (increment y) x))
           (
             (isBoxish below)
-            (moveKeeper (moveBox state (list x (++ y)) (++ (++ y)) x) (++ y) x)
+            (moveKeeper (moveBox state (list x (increment y)) (increment (increment y)) x) (increment y) x)
           )
           (t nil)
         )
@@ -258,10 +271,10 @@
       (
         (equal direction 'left)
         (cond 
-          ((isEmpty onLeft) (moveKeeper state y (-- x)))
+          ((isEmpty onLeft) (moveKeeper state y (decrement x)))
           (
             (isBoxish onLeft)
-            (moveKeeper (moveBox state (list (-- x) y) y (-- (-- x))) y (-- x))
+            (moveKeeper (moveBox state (list (decrement x) y) y (decrement (decrement x))) y (decrement x))
           )
           (t nil)
         )
@@ -269,10 +282,10 @@
       (
        (equal direction 'right)
        (cond 
-         ((isEmpty onRight) (moveKeeper state y (++ x)))
+         ((isEmpty onRight) (moveKeeper state y (increment x)))
          (
            (isBoxish onRight)
-           (moveKeeper (moveBox state (list (++ x) y) y (++ (++ x))) y (++ x))
+           (moveKeeper (moveBox state (list (increment x) y) y (increment (increment x))) y (increment x))
          )
          (t nil)
        )
@@ -282,6 +295,10 @@
   )
 )
 
+; MOVEBOX takes as its arguments the STATE of the game, the current POSITION of
+; box as a list containing the box's x and y coordinates, and the ROW and
+; COLUMN to which the box is desired to be moved. If the move is possible,
+; the resulting state is returned. Otherwise, NIL.
 (defun moveBox (state position row column)
   (cond 
     (
@@ -301,7 +318,11 @@
   )
 )
 
-; assumes that keeper can occupy the desired square
+; MOVEKEEPER takes as its arguments the STATE of the game, and the ROW and
+; COLUMN to which the keeper is desired to move. If the input STATE is nil,
+; nil is returned. Otherwise, the new state with a moved keeper is returned.
+; MOVEKEEPER assumes that the move is possible and accordingly makes no effort
+; to validate its inputs.
 (defun moveKeeper (state row column)
   (cond 
     ((null state) nil)
@@ -312,7 +333,10 @@
 	        (y (cadr position))
           (keeperOld (cond ((isKeeper (get-square state y x)) blank) (t star)))
           (keeperNew 
-            (cond ((isStar (get-square state row column)) keeperstar) (t keeper))
+            (cond
+              ((isStar (get-square state row column)) keeperstar)
+              (t keeper)
+            )
           )
         )
         (set-square (set-square state row column keeperNew) y x keeperOld)
@@ -321,11 +345,21 @@
   )
 )
 
+; ISEMPTY returns true if the input SQUARE is either a blank or a star, else
+; nil.
 (defun isEmpty (square) (or (isBlank square) (isStar square)))
-(defun isBoxish (square) (or (isBox square) (isBoxStar square)))
-(defun ++ (number) (+ number 1))
-(defun -- (number) (- number 1))
 
+; ISBOXISH returns true if the input SQUARE is either a box or a boxstar, else
+; nil.
+(defun isBoxish (square) (or (isBox square) (isBoxStar square)))
+
+; INCREMENT returns NUMBER incremented by 1.
+(defun increment (number) (+ number 1))
+
+; DECREMENT returns NUMBER decremented by 1.
+(defun decrement (number) (- number 1))
+
+; GET-SQUARE returns the value located at row R and column C in state S.
 (defun get-square (s r c)
   (cond
     ((outOfBounds s r c) nil)
@@ -335,13 +369,14 @@
   )
 )
 
+; OUTOFBOUNDS returns true if and only if the coordinate specified by row R and
+; column C is out of the bounds of state S.
 (defun outOfBounds (s r c)
-  (cond 
-    ((or (< r 0) (< c 0) (> r (- (length s) 1)) (> c (- (length (first s)) 1))) t)
-    (t nil)
-  )
+  (or (< r 0) (< c 0) (> r (- (length s) 1)) (> c (- (length (first s)) 1)))
 )
 
+; SET-SQUARE sets the value of the square located at row R and column C in state
+; S to the value V.
 (defun set-square (s r c v)
   (cond
     ((outOfBounds s r c) nil)
@@ -350,9 +385,13 @@
   )
 )
 
+; SET-VALUE sets the item located at INDEX in ITEMS to VALUE;
 (defun set-value (items index value)
   (cond
-    ((> index 0) (cons (first items) (set-value (rest items) (- index 1) value)))
+    (
+      (> index 0)
+      (cons (first items) (set-value (rest items) (- index 1) value))
+    )
     (t (cons value (rest items)))
   )
 )
@@ -367,6 +406,10 @@
 ; EXERCISE: Modify this function to compute the
 ; number of misplaced boxes in s.
 ;
+; PROOF OF ADMISSABILITY. The heuristic is at maximum when when none of the
+; N boxes are sitting on goal squares. In this case, it will take at least
+; N moves to solve the game, and thus this heuristic never overestimates the
+; cost of reaching the goal state.
 (defun h1 (s)
   (cond
     ((null s) 0)
@@ -394,6 +437,11 @@
 ; For each row, compute the absolute value of the difference between how many
 ; boxes there are in that row and how many goals there are in that row. Then
 ; return the sum of all of these row differences.
+;
+; PROOF OF ADMISSABILITY. The heuristic is at maximum when when none of the
+; N boxes are in the same row as the goals. In this case, it will take at least
+; N moves to solve the game, and thus this heuristic never overestimates the
+; cost of reaching the goal state.
 (defun h204156534 (s)
   (cond
     ((null s) 0)
@@ -401,6 +449,9 @@
   )
 )
 
+; DELTA returns the absolute value of the difference between the number of 
+; boxes and goals in ROW. BOXCARRY and GOALCARRY are both expected to have value
+; 0 when DELTA is called by a function other than itself.
 (defun delta (row boxCarry goalCarry)
   (cond
     ((null row) (absolute (- boxCarry goalCarry)))
@@ -410,6 +461,7 @@
   )
 )
 
+; ABSOLUTE returns the absolute value of VALUE.
 (defun absolute (number)
   (cond
     ((< number 0) (- number))
