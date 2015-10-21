@@ -251,14 +251,31 @@
   )
 )
 
+(defun moveBox (state position row column)
+  (let* (
+      (x (first position))
+      (y (second position))
+      (boxOld (cond ((isBox (get-square state y x)) blank) (t star)))
+      (boxNew 
+        (cond ((isStar (get-square state row column)) boxstar) (t box))
+      )
+    )
+    (set-square (set-square state row column boxNew) y x boxOld)
+  )
+)
+
+; assumes that keeper can occupy the desired square
 (defun moveKeeper (state row column)
   (let* (
       (position (getKeeperPosition state 0))
 	    (x (car position))
 	    (y (cadr position))
-      (keeperOn (cond ((isKeeper (get-square state y x)) blank) (t star)))
+      (keeperOld (cond ((isKeeper (get-square state y x)) blank) (t star)))
+      (keeperNew 
+        (cond ((isStar (get-square state row column)) keeperstar) (t keeper))
+      )
     )
-    (set-square (set-square state row column keeper) y x keeperOn)
+    (set-square (set-square state row column keeperNew) y x keeperOld)
   )
 )
 
