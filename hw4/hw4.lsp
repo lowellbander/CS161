@@ -1,6 +1,7 @@
 ; TODO: bishop-valid
 ; TODO: backtracking
 ; TODO: note on coordinate system, representation of game state
+; TODO: comments on all functions
 ;
 ; CS 161
 ; Homework 4
@@ -64,21 +65,20 @@
   )
 )
 
-;(defun bishop-valid (solution n)
-;  (cond
-;    (
-;      ((null solution) t)
-;      (bishop-helper
-;        (rest solution)
-;        (+ (first solution) 1)
-;        (- (first solution) 1)
-;        n
-;      )
-;      (bishop-valid (rest solution) n)
-;    )
-;    (t nil)
-;  )
-;)
+(defun bishop-valid (solution)
+  (cond
+    ((null solution) t)
+    (
+      (bishop-helper
+        (rest solution)
+        (- (first solution) 1)
+        (+ (first solution) 1)
+      )
+      (bishop-valid (rest solution))
+    )
+    (t nil)
+  )
+)
 
 (defun bishop-helper (solution above below)
   (cond
