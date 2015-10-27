@@ -2,8 +2,8 @@
 (load 'hw4.lsp)
 (use-package :lisp-unit)
 
-(define-test solve
-  (assert-false (solve nil 0 0))
+(define-test solve-column
+  (assert-equal '(1) (solve-column nil 1 1))
 )
 
 (run-tests)

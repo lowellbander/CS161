@@ -6,17 +6,57 @@
 ; The function QUEENS takes as its argument a dimension N, and returns a
 ; solution to the N queens problem on an NxN chessboard.
 (defun queens (n)
-  nil
+  (solve-all nil 1 n n)
 )
 
-; (solve nil 1 4) ; call form for firt attempt if n = 4
+; (solve-all nil 0 4) ; call form for first attempt if n = 4
+(defun solve-all (solution column nColumns nRows)
+  (cond
+    ((equal column nColumns) (solve-column solution 1 nRows))
+    (t (solve-all (solve-column solution 1 nRows) (+ 1 column) nColumns nRows))
+  )
+)
+
+; (solve-column nil 1 4) ; call form for first attempt if n = 4
 ; try pushing 1, 2, 3, ... n
 ; if all attempts fail, return nil
 ; else, return the first attempt that succeeds
-(defun solve (solution attempt n)
+(defun solve-column (solution candidate nRows)
+  (let* (
+      (attempt (append solution (list candidate)))
+    )
+    (cond
+      ((valid attempt) attempt) ; columns thus far are valid
+      ((equal candidate nRows) nil) ; puzzle isn't solvable
+      (t (solve-column solution (+ 1 candidate) nRows))
+    )
+  )
+)
+
+; VALID returns T if SOLUTION satisfies the constraint of the problem, else NIL.
+(defun valid (solution)
+  (or
+    (rook-valid solution)
+  )
+)
+
+(defun rook-valid (solution)
+  (unique solution)
+)
+
+(defun unique (items)
   (cond
-    ((equal n (length solution)) solution) ; the puzzle has been solved, done
-    ;((valid (append solution (list attempt))))
+    ((null items) t)
+    ((contains (first items) (rest items)) nil)
+    (t (unique (rest items)))
+  )
+)
+
+(defun contains (needle haystack)
+  (cond
+    ((null haystack) nil)
+    ((equal needle (first haystack)) t)
+    (t (contains needle (rest haystack)))
   )
 )
 
