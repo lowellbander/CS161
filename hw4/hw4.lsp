@@ -1,3 +1,7 @@
+; TODO: bishop-valid
+; TODO: backtracking
+; TODO: note on coordinate system, representation of game state
+;
 ; CS 161
 ; Homework 4
 ; Lowell Bander
@@ -57,6 +61,36 @@
     ((null haystack) nil)
     ((equal needle (first haystack)) t)
     (t (contains needle (rest haystack)))
+  )
+)
+
+;(defun bishop-valid (solution n)
+;  (cond
+;    (
+;      ((null solution) t)
+;      (bishop-helper
+;        (rest solution)
+;        (+ (first solution) 1)
+;        (- (first solution) 1)
+;        n
+;      )
+;      (bishop-valid (rest solution) n)
+;    )
+;    (t nil)
+;  )
+;)
+
+(defun bishop-helper (solution above below)
+  (cond
+    ((null solution) t)
+    (
+      (or
+        (equal (first solution) above)
+        (equal (first solution) below)
+      )
+      nil
+    )
+    (t (bishop-helper (rest solution) (- above 1) (+ below 1)))
   )
 )
 
