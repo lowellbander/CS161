@@ -1,4 +1,3 @@
-; TODO: bishop-valid
 ; TODO: backtracking
 ; TODO: note on coordinate system, representation of game state
 ; TODO: comments on all functions
@@ -40,8 +39,9 @@
 
 ; VALID returns T if SOLUTION satisfies the constraint of the problem, else NIL.
 (defun valid (solution)
-  (or
+  (and
     (rook-valid solution)
+    (bishop-valid solution)
   )
 )
 
