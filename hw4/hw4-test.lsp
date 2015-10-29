@@ -29,5 +29,9 @@
   (assert-equal '(1 2 4) (increment-last '(1 2 3)))
 )
 
+(define-test get-children
+  (assert-equal '((1 1) (1 2) (1 3)) (get-children '(1) nil 3))
+)
+
 (run-tests)
 

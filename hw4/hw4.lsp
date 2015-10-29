@@ -56,12 +56,20 @@
 
 (defun get-children (solution children n)
   (cond
-    ((equal n (length solution)) solution)
+    ((equal n (length children)) children)
     (
       (equal 0 (length children))
-      (get-children solution (append solution '(1)) n)
+      ;(list (append solution '(1)))
+      (get-children solution (list (append solution '(1))) n)
     )
-    ;(t (get-children solution (append children ())))
+    (
+      t
+      (get-children
+        solution
+        (append children (list (increment-last (lastof children))))
+        n
+      )
+    )
   )
 )
 
