@@ -1,4 +1,3 @@
-; TODO: backtracking
 ; TODO: note on coordinate system, representation of game state
 ; TODO: comments on all functions
 ;
@@ -10,31 +9,7 @@
 ; The function QUEENS takes as its argument a dimension N, and returns a
 ; solution to the N queens problem on an NxN chessboard.
 (defun queens (n)
-  (solve-all nil 1 n n)
-)
-
-; (solve-all nil 0 4) ; call form for first attempt if n = 4
-(defun solve-all (solution column nColumns nRows)
-  (cond
-    ((equal column nColumns) (solve-column solution 1 nRows))
-    (t (solve-all (solve-column solution 1 nRows) (+ 1 column) nColumns nRows))
-  )
-)
-
-; (solve-column nil 1 4) ; call form for first attempt if n = 4
-; try pushing 1, 2, 3, ... n
-; if all attempts fail, return nil
-; else, return the first attempt that succeeds
-(defun solve-column (solution candidate nRows)
-  (let* (
-      (attempt (append solution (list candidate)))
-    )
-    (cond
-      ((valid attempt) attempt) ; columns thus far are valid
-      ((equal candidate nRows) nil) ; puzzle isn't solvable
-      (t (solve-column solution (+ 1 candidate) nRows))
-    )
-  )
+  (solve '(1) n)
 )
 
 ; (solve '(1) n) ; b/c '(1) is first child
