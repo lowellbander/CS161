@@ -61,8 +61,12 @@
       (equal 0 (length children))
       (get-children solution (append solution '(1)) n)
     )
-    (t 'foo)
+    ;(t (get-children solution (append children ())))
   )
+)
+
+(defun increment-last (items)
+  (append (butlast items) (list (+ 1 (lastof items))))
 )
 
 (defun lastof (items)

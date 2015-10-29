@@ -25,5 +25,9 @@
   (assert-equal 3 (lastof '(1 2 3)))
 )
 
+(define-test increment-last
+  (assert-equal '(1 2 4) (increment-last '(1 2 3)))
+)
+
 (run-tests)
 
