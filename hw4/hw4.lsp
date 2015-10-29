@@ -43,14 +43,14 @@
 )
 
 (defun get-child (solution n)
-  (orp #'valid (get-children nil n))
+  (or-valid (get-children solution nil n))
 )
 
-(defun orp (predicate items)
+(defun or-valid (items)
   (cond
     ((null items) nil)
-    ((predicate (first items)) (first items))
-    (t (orp predicate (rest items)))
+    ((valid (first items)) (first items))
+    (t (or-valid (rest items)))
   )
 )
 

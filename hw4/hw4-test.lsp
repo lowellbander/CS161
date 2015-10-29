@@ -33,5 +33,9 @@
   (assert-equal '((1 1) (1 2) (1 3)) (get-children '(1) nil 3))
 )
 
+(define-test get-child
+  (assert-equal '(2 4 1 3) (get-child '(2 4 1) 4))
+)
+
 (run-tests)
 
