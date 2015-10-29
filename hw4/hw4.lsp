@@ -41,12 +41,21 @@
 (defun solve (solution n)
   (let* (
       (child (get-child solution n))
+      (sibling (get-sibling solution n))
     )
     (cond
       ((and (valid solution) (equal n (length solution)) solution))
       ((and child (solve child n)) (solve child n))
-      (t 'foo)
+      ((and sibling (solve sibling n)) (solve sibling n))
+      (t nil)
     )
+  )
+)
+
+(defun get-sibling (solution n)
+  (cond
+    ((= (lastof solution) n) nil)
+    (t (increment-last solution))
   )
 )
 

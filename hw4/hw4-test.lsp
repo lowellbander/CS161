@@ -38,7 +38,10 @@
 )
 
 (define-test solve
+  (assert-equal '(2 4 1 3) (solve '(1) 4))
   (assert-equal '(1 3 5 2 4) (solve '(1) 5))
+  (assert-equal '(2 4 6 1 3 5) (solve '(1) 6))
+  (assert-equal '(1 3 5 7 2 4 6) (solve '(1) 6))
 )
 
 (run-tests)
