@@ -39,7 +39,15 @@
 
 ; (solve '(1) n) ; b/c '(1) is first child
 (defun solve (solution n)
-  nil
+  (let* (
+      (child (get-child solution n))
+    )
+    (cond
+      ((and (valid solution) (equal n (length solution)) solution))
+      ((and child (solve child n)) (solve child n))
+      (t 'foo)
+    )
+  )
 )
 
 (defun get-child (solution n)

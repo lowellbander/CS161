@@ -37,5 +37,9 @@
   (assert-equal '(2 4 1 3) (get-child '(2 4 1) 4))
 )
 
+(define-test solve
+  (assert-equal '(1 3 5 2 4) (solve '(1) 5))
+)
+
 (run-tests)
 
