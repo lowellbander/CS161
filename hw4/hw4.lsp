@@ -37,6 +37,42 @@
   )
 )
 
+; (solve '(1) n) ; b/c '(1) is first child
+(defun solve (solution n)
+  nil
+)
+
+(defun get-child (solution n)
+  (orp #'valid (get-children nil n))
+)
+
+(defun orp (predicate items)
+  (cond
+    ((null items) nil)
+    ((predicate (first items)) (first items))
+    (t (orp predicate (rest items)))
+  )
+)
+
+(defun get-children (solution children n)
+  (cond
+    ((equal n (length solution)) solution)
+    (
+      (equal 0 (length children))
+      (get-children solution (append solution '(1)) n)
+    )
+    (t 'foo)
+  )
+)
+
+(defun lastof (items)
+  (cond
+    ((null items) nil)
+    ((equal 1 (length items)) (first items))
+    (t (lastof (rest items)))
+  )
+)
+
 ; VALID returns T if SOLUTION satisfies the constraint of the problem, else NIL.
 (defun valid (solution)
   (and

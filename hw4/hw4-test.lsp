@@ -19,5 +19,11 @@
   (assert-true (bishop-valid '(1 3 1)))
 )
 
+(define-test lastof
+  (assert-false (lastof nil))
+  (assert-equal 3 (lastof '(3)))
+  (assert-equal 3 (lastof '(1 2 3)))
+)
+
 (run-tests)
 
