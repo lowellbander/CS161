@@ -2,10 +2,6 @@
 (load 'hw4.lsp)
 (use-package :lisp-unit)
 
-(define-test solve-column
-  (assert-equal '(1) (solve-column nil 1 1))
-)
-
 (define-test bishop-helper
   (assert-true (bishop-helper '(3 2) 0 2))
   (assert-false (bishop-helper '(2) 0 2))
@@ -37,11 +33,11 @@
   (assert-equal '(2 4 1 3) (get-child '(2 4 1) 4))
 )
 
-(define-test solve
-  (assert-equal '(2 4 1 3) (solve '(1) 4))
-  (assert-equal '(1 3 5 2 4) (solve '(1) 5))
-  (assert-equal '(2 4 6 1 3 5) (solve '(1) 6))
-  (assert-equal '(1 3 5 7 2 4 6) (solve '(1) 6))
+(define-test queens
+  (assert-equal '(2 4 1 3) (queens 4))
+  (assert-equal '(1 3 5 2 4) (queens 5))
+  (assert-equal '(2 4 6 1 3 5) (queens 6))
+  (assert-equal '(1 3 5 7 2 4 6) (queens 7))
 )
 
 (run-tests)

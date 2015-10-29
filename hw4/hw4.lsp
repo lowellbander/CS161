@@ -1,10 +1,16 @@
-; TODO: note on coordinate system, representation of game state
-; TODO: comments on all functions
-;
 ; CS 161
 ; Homework 4
 ; Lowell Bander
 ; UID 204 156 534
+;
+; This file contains a function QUEENS, which, in combination with the remaining
+; functions in this file, returns a solution to the "N Queens" problem on an NxN
+; chessboard for a given N. The format of the solution is a list of numbers,
+; where each number refers to a row on the board. The index of a number in this
+; list is interpreted as the column on the board. Lastly, the upper-left corner
+; of the board is the origin with row=1, column=1. Thusly, for example, a board
+; of dimensions 3x3 (n=3) with queens along the main diagonal is represented as
+; the list '(1 2 3).
 
 ; The function QUEENS takes as its argument a dimension N, and returns a
 ; solution to the N queens problem on an NxN chessboard.
@@ -12,7 +18,10 @@
   (solve '(1) n)
 )
 
-; (solve '(1) n) ; b/c '(1) is first child
+; The function SOLVE takes as its arguments a SOLUTION in the form of a list and
+; the dimension of the board. Treating "N Queens" as a constraint satisfaction
+; problem, it performs depth-first search and returns the solution to the
+; problem if there is one. Else, NIL.
 (defun solve (solution n)
   (let* (
       (child (get-child solution n))
@@ -27,6 +36,9 @@
   )
 )
 
+; The function GET-SIBLING takes as its arguments a SOLUTION and a dimension N,
+; and returns a variant of SOLUTION where the leaf is replaced by its sibling,
+; if it has one. Else, NIL.
 (defun get-sibling (solution n)
   (cond
     ((= (lastof solution) n) nil)
@@ -34,10 +46,14 @@
   )
 )
 
+; The function GET-CHILD takes as its arguments a SOLUTION and a dimension N,
+; and returns the first valid child of the SOLUTION if there is one, else NIL.
 (defun get-child (solution n)
   (or-valid (get-children solution nil n))
 )
 
+; OR-VALID take as input a list ITEMS, and behaves identically to the standard
+; OR function in Lisp, except that the predicate used is the function VALID.
 (defun or-valid (items)
   (cond
     ((null items) nil)
@@ -46,6 +62,9 @@
   )
 )
 
+; GET-CHILDREN takes as input a SOLUTION, a list CHILDREN which is NIL for all
+; non-recursive calls, and a dimension N. It returns all children states of
+; SOLUTION without checking for validity.
 (defun get-children (solution children n)
   (cond
     ((equal n (length children)) children)
@@ -65,10 +84,12 @@
   )
 )
 
+; INCREMENT-LAST returns ITEMS with the last element incremented by one.
 (defun increment-last (items)
   (append (butlast items) (list (+ 1 (lastof items))))
 )
 
+; LASTOF returns the last element in ITEMS.
 (defun lastof (items)
   (cond
     ((null items) nil)
@@ -85,10 +106,12 @@
   )
 )
 
+; ROOK-VALID returns T if SOLUTION satisfies an "N Rooks" problem, else NIL.
 (defun rook-valid (solution)
   (unique solution)
 )
 
+; UNIQUE returns T if the elements of ITEMS are unique, else NIL.
 (defun unique (items)
   (cond
     ((null items) t)
@@ -97,6 +120,7 @@
   )
 )
 
+; CONTAINS returns T if NEEDLE is in HAYSTACK, else NIL.
 (defun contains (needle haystack)
   (cond
     ((null haystack) nil)
@@ -105,6 +129,7 @@
   )
 )
 
+; BISHOP-VALID returns T if SOLUTION satisfies n "N Bishops" problem, else NIL.
 (defun bishop-valid (solution)
   (cond
     ((null solution) t)
@@ -120,6 +145,9 @@
   )
 )
 
+; A helper function for BISHOP-VALID, BISHOP-HELPER traverses a SOLUTION
+; and returns T if the diagonals above ABOVE and below BELOW do not contain
+; queens, else NIL.
 (defun bishop-helper (solution above below)
   (cond
     ((null solution) t)
