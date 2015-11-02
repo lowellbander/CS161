@@ -1,6 +1,7 @@
 \documentclass[]{article}
 
 \usepackage{amsmath}
+\usepackage[margin=1in]{geometry}
 
 \begin{document}
 
@@ -18,6 +19,7 @@ F & T & T & T\\
 T & F & T & T\\
 T & T & F & F\\
 \end{tabular}
+\caption{Equivalence of $P \implies \neg Q$  and $Q \implies \neg P$.}
 \end{table}
 
 \begin{table}[h]
@@ -29,6 +31,53 @@ F & T & T & T\\
 T & F & T & T\\
 T & T & F & F\\
 \end{tabular}
+\caption{Equivalence of $P \iff \neg Q$  and $((P \land \neg Q) \lor (\neg P \land Q))$.}
+\end{table}
+
+\section{}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ c | c | c | c | c}
+$S$ & $F$ & $S \implies F$ & $\neg S \implies \neg F$ & $((S \implies F) \implies (\neg S \implies \neg F))$ \\\hline
+F & F & T & T & T\\
+F & T & T & F & F\\
+T & F & F & T & T\\
+T & T & T & T & T\\
+\end{tabular}
+\caption{The sentence $((S \implies F) \implies (\neg S \implies \neg F))$ is observed to be satisfiable yet invalid.}
+\end{table}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ c | c | c | c | c | c}
+$S$ & $F$ & $H$ & $S \implies F$ & $(S \lor H) \implies F$ & $((S \implies F) \implies ((S \lor H) \implies F))$ \\\hline
+F & F & F & T & T & T \\
+F & F & T & T & F & F \\
+F & T & F & T & T & T \\
+F & T & T & T & T & T \\
+T& F & F & F & F & T \\
+T & F & T & F & F & T \\
+T & T & F & T & T & T \\
+T & T & T & T & T & T \\
+\end{tabular}
+\caption{The sentence $((S \implies F) \implies ((S \lor H) \implies F))$ is observed to be satisfiable yet invalid.}
+\end{table}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ c | c | c | c | c | c}
+$S$ & $F$ & $H$ & $((S \land H) \implies F)$  & $((S \implies F) \lor (H \implies F))$ & $((S \land H) \implies F) \iff ((S \implies F) \lor (H \implies F))$\\\hline
+F & F & F & T & T & T \\
+F & F & T & T & T & T \\
+F & T & F & T & T & T \\
+F & T & T & T & T & T \\
+T& F & F & T & T & T\\
+T & F & T & F & F & T \\
+T & T & F & T & T & T \\
+T & T & T & T & T & T \\
+\end{tabular}
+\caption{The sentence $((S \land H) \implies F) \iff ((S \implies F) \lor (H \implies F))$ is observed to be both satisfiable and valid.}
 \end{table}
 
 \end{document}
