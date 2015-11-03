@@ -1,7 +1,7 @@
 \documentclass[]{article}
 
 \usepackage{amsmath}
-\usepackage[margin=1in]{geometry}
+\usepackage[margin=.75in]{geometry}
 
 \begin{document}
 
@@ -34,6 +34,8 @@ T & T & F & F\\
 \caption{Equivalence of $P \iff \neg Q$  and $((P \land \neg Q) \lor (\neg P \land Q))$.}
 \end{table}
 
+\newpage
+
 \section{}
 
 \begin{table}[h]
@@ -48,7 +50,7 @@ T & T & T & T & T\\
 \caption{The sentence $((S \implies F) \implies (\neg S \implies \neg F))$ is observed to be satisfiable yet invalid.}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[h!]
 \centering
 \begin{tabular}{ c | c | c | c | c | c}
 $S$ & $F$ & $H$ & $S \implies F$ & $(S \lor H) \implies F$ & $((S \implies F) \implies ((S \lor H) \implies F))$ \\\hline
@@ -64,7 +66,7 @@ T & T & T & T & T & T \\
 \caption{The sentence $((S \implies F) \implies ((S \lor H) \implies F))$ is observed to be satisfiable yet invalid.}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[h!]
 \centering
 \begin{tabular}{ c | c | c | c | c | c}
 $S$ & $F$ & $H$ & $((S \land H) \implies F)$  & $((S \implies F) \lor (H \implies F))$ & $((S \land H) \implies F) \iff ((S \implies F) \lor (H \implies F))$\\\hline
@@ -79,5 +81,24 @@ T & T & T & T & T & T \\
 \end{tabular}
 \caption{The sentence $((S \land H) \implies F) \iff ((S \implies F) \lor (H \implies F))$ is observed to be both satisfiable and valid.}
 \end{table}
+
+\newpage
+
+\section{}
+
+If we assign the state of being mythical to $Y$, mortal to $O$, mammal to $A$, horned to $H$, and magical to $G$, the information can be represented with the following propositional logic knowledge base:
+
+\begin{itemize}
+\item{$Y \implies \neg Q$}
+\item{$\neg Y \implies (O \land A)$}
+\item{$(\neg O \lor A) \implies H$}
+\item{$H \implies G$}
+\end{itemize}
+
+The representation of this knowledge base in conjunctive normal form is
+
+\begin{gather}
+(\neg Y \lor \neg O) \land (Y \lor O) \land (Y \lor A) \land (O \lor \neg A \lor H) \land (\neg H \lor G)
+\end{gather}
 
 \end{document}
