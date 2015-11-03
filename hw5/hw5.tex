@@ -2,6 +2,10 @@
 
 \usepackage{amsmath}
 \usepackage[margin=.75in]{geometry}
+\usepackage{multicol}
+
+\newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
+\newcommand{\tab}[1]{\hspace{.2\textwidth}\rlap{#1}}
 
 \begin{document}
 
@@ -98,7 +102,69 @@ If we assign the state of being mythical to $Y$, mortal to $O$, mammal to $A$, h
 The representation of this knowledge base in conjunctive normal form is
 
 \begin{gather}
-(\neg Y \lor \neg O) \land (Y \lor O) \land (Y \lor A) \land (O \lor \neg A \lor H) \land (\neg H \lor G)
+(\neg Y \lor \neg O) \land (Y \lor O) \land (Y \lor A) \land (O \lor H) \land (\neg A \lor H) \land (\neg H \lor G)
 \end{gather}
+
+We can enumerate the above knowledge base as follows:
+
+\begin{multicols}{2}
+\begin{enumerate}
+\item{$\neg Y \lor \neg O$}
+\item{$Y \lor O$}
+\item{$Y \lor A$}
+\item{$O \lor H$}
+\item{$\neg A \lor H$}
+\item{$\neg H \lor G$}
+\end{enumerate}
+\end{multicols}
+
+By way of resolution, we can show exhaustively that the given knowledge base is insufficient for proving that the unicorn is mythical. No contradiction arrises from assuming the negation of the consequence (the unicorn being mythical), and thus the unicorn is not mythical.
+
+\begin{multicols}{2}
+\begin{enumerate}
+\setcounter{enumi}{6}
+\item \itab{$\neg Y$} \tab{Given}
+\item \itab{$O$} \tab{(2, 6)}
+\item \itab{$A$} \tab{(3, 6)}
+\item \itab{$H$} \tab{(5, 8)}
+\item \itab{$G$} \tab{(6, 9)}
+\item \itab{$\neg A \lor G$} \tab{(5, 6)}
+\item \itab{$\neg Y \lor H$} \tab{(1, 4)}
+\item \itab{$\neg Y \lor G$} \tab{(6, 12)}
+\item \itab{$G \lor O$} \tab{(2, 13)}
+\item \itab{$G \lor A$} \tab{(3, 13)}
+\item \itab{$G \lor H$} \tab{(5, 15)}
+\item \itab{$H \lor O$} \tab{(2, 12)}
+\item \itab{$H \lor A$} \tab{(3, 12)}
+\item \itab{$G \lor Y$} \tab{(3, 11)}
+\end{enumerate}
+\end{multicols}
+
+In contrast, the resolution method shows that the knowledge base given entails that the unicorn is magical, because a contradiction (terms 8 and 12) is reached when the unicorn is assumed to be nonmagical.
+
+\begin{multicols}{2}
+\begin{enumerate}
+\setcounter{enumi}{6}
+\item \itab{$\neg Y$} \tab{Given}
+\item \itab{$\neg H$} \tab{(6, 7)}
+\item \itab{$\neg A$} \tab{(5, 8)}
+\item \itab{$Y$} \tab{(3, 9)}
+\item \itab{$\neg O$} \tab{(1, 10)}
+\item \itab{$H$} \tab{(4, 11)}
+\end{enumerate}
+\end{multicols}
+
+Similarly, when the unicorn is assumed to be non-horned, a contradiction (terms 8 and 11) is reached, and thus the unicorn must be horned.
+
+\begin{multicols}{2}
+\begin{enumerate}
+\setcounter{enumi}{6}
+\item \itab{$\neg H$} \tab{Given}
+\item \itab{$O$} \tab{(4, 7)}
+\item \itab{$\neg A$} \tab{(5, 7)}
+\item \itab{$Y$} \tab{(3, 9)}
+\item \itab{$\neg O$} \tab{(1, 10)}
+\end{enumerate}
+\end{multicols}
 
 \end{document}
