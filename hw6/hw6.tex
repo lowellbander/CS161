@@ -2,6 +2,8 @@
 
 \usepackage{amsmath}
 
+\renewcommand{\theenumiii}{\arabic{enumiii}}
+
 \begin{document}
 
 \title{CS 161 - Assignment 6}
@@ -33,19 +35,30 @@
 \item Satisfiable if $\forall x [P(x)]$.
 \end{enumerate}
 
+\newpage
 
 \item \begin{enumerate}
 \item \begin{itemize}
 \item $\forall x [Food(x) \implies Likes(John, x)]$
 \item $Food(Apples)$
 \item $Food(Chicken)$
-\item $\forall x,y [(Eats(x,y \land \neg Kills(y,x)) \implies Food(y)]$
-\item $\forall x,y [Kills(x,y \implies \neg Alive(y))]$
+\item $\forall x,y [(Eats(x,y) \land \neg Kills(y,x)) \implies Food(y)]$
+\item $\forall x,y [Kills(x,y) \implies \neg Alive(y)]$
 \item $Eats(Bill, Peanuts) \land Alive(Bill)$
-\item $\forall [Eats(Bill, x) \implies Eats(Sue, x)]$
+\item $\forall x [Eats(Bill, x) \implies Eats(Sue, x)]$
 \end{itemize}
-\end{enumerate}
 
+\item \begin{enumerate}
+\item $\neg Food(x) \lor Likes(John, x)$
+\item $Food(Apples)$
+\item $Food(Chicken)$
+\item $\neg Eats(x,y) \lor Kills(y,x) \lor Food(y)$
+\item $\neg Kills(x,y) \lor \neg Alive(y)$
+\item $Eats(Bill, Peanuts)$
+\item $Alive(Bill)$
+\item $\neg Eats(Bill, x) \lor Eats(Sue, x)$
+\end{enumerate}
+\end{enumerate}
 \end{enumerate}
 
 \end{document}
