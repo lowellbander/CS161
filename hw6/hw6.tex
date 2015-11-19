@@ -4,6 +4,9 @@
 
 \renewcommand{\theenumiii}{\arabic{enumiii}}
 
+\newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
+\newcommand{\tab}[1]{\hspace{.5\textwidth}\rlap{#1}}
+
 \begin{document}
 
 \title{CS 161 - Assignment 6}
@@ -52,12 +55,23 @@
 \item $\neg Food(x) \lor Likes(John, x)$
 \item $Food(Apples)$
 \item $Food(Chicken)$
-\item $\neg Eats(x,y) \lor Kills(y,x) \lor Food(y)$
-\item $\neg Kills(x,y) \lor \neg Alive(y)$
+\item $\neg Eats(p,q) \lor Kills(q,p) \lor Food(q)$
+\item $\neg Kills(r,s) \lor \neg Alive(s)$
 \item $Eats(Bill, Peanuts)$
 \item $Alive(Bill)$
-\item $\neg Eats(Bill, x) \lor Eats(Sue, x)$
+\item $\neg Eats(Bill, t) \lor Eats(Sue, t)$
 \end{enumerate}
+
+\item \begin{enumerate}
+\setcounter{enumiii}{8}
+\item \itab{$\neg Likes(John, Peanuts)$} \tab{By Assumption}
+\item \itab{$\neg Kills(r, Bill)$} \tab{(5, 7) $\theta = \{s/Bill\}$}
+\item \itab{$\neg Eats (Bill, r) \lor Food(r)$} \tab{(4, 10) $\theta = \{q/r, p/Bill\}$}
+\item \itab{$Food(Peanuts)$} \tab{(6, 11) $\theta = \{r/Peanuts\}$}
+\item \itab{$Likes(John, Peanuts)$} \tab{(1, 12) $\theta = \{x/Peanuts\}$}
+\end{enumerate}
+A contradiction arrises from assuming the negation of the consequence, and therefore the knowledge base entails that John likes peanuts.
+
 \end{enumerate}
 \end{enumerate}
 
