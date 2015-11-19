@@ -25,8 +25,26 @@
 \item $\exists x,y \forall z [P(x) \land P(y) \land \neg(x = y)\land ((\neg(z = x) \land \neg(z = y)) \implies \neg P(z))]$
 \end{enumerate}
 
-\item
-\item
+\item \begin{enumerate}
+\item Satisfiable. For example, let $x = B$.
+\item The knowledge base is not satisfiable because it is inconsistent.
+\item This knowledge base is satisfiable. For example, let $x = A$ and $y = B$.
+\item The knowledge base is satisfiable for all values of $x$.
+\item Satisfiable if $\forall x [P(x)]$.
+\end{enumerate}
+
+
+\item \begin{enumerate}
+\item \begin{itemize}
+\item $\forall x [Food(x) \implies Likes(John, x)]$
+\item $Food(Apples)$
+\item $Food(Chicken)$
+\item $\forall x,y [(Eats(x,y \land \neg Kills(y,x)) \implies Food(y)]$
+\item $\forall x,y [Kills(x,y \implies \neg Alive(y))]$
+\item $Eats(Bill, Peanuts) \land Alive(Bill)$
+\item $\forall [Eats(Bill, x) \implies Eats(Sue, x)]$
+\end{itemize}
+\end{enumerate}
 
 \end{enumerate}
 
