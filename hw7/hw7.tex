@@ -1,5 +1,9 @@
 \documentclass[]{article}
 
+\usepackage{amsmath,amsthm,amssymb}
+
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
 \begin{document}
 
 \title{CS 161 - Assignment 7}
@@ -8,8 +12,22 @@
 
 \begin{enumerate}
 \item \begin{enumerate}
-\item
-\item
+\item \begin{proof}
+\begin{align}
+P(A,B|K) &= \frac{P(A,B,K)}{P(K)} \\
+&= \frac{P(A|B,K)P(B,K)}{P(K)}\\
+&= \frac{P(A|B,K)P(B|K)P(K)}{P(K)}\\
+&= P(A|B,K)P(B|K)\\
+\end{align} \end{proof}
+\item \begin{proof}
+\begin{align}
+P(A|B,K) &= \frac{P(B,A,K)}{P(B,K)}\\
+&= \frac{P(B|A,K)P(A,K)}{P(B,K)}\\
+&= \frac{P(B|A,K)P(A|K)P(K)}{P(B,K)}\\
+&= \frac{P(B|A,K)P(A|K)P(K)}{P(B|K)P(K)}\\
+&= \frac{P(B|A,K)P(A|K)}{P(B|K)}\\
+\end{align}
+\end{proof}
 \end{enumerate}
 \item 
 \item 
