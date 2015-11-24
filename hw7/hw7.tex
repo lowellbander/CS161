@@ -1,6 +1,7 @@
 \documentclass[]{article}
 
 \usepackage{amsmath,amsthm,amssymb}
+\usepackage{multicol}
 
 \renewcommand{\qedsymbol}{$\blacksquare$}
 
@@ -29,7 +30,25 @@ P(A|B,K) &= \frac{P(B,A,K)}{P(B,K)}\\
 \end{align}
 \end{proof}
 \end{enumerate}
-\item 
+\newpage
+\item If we assign $O$ to the state of oil being present, $G$ to natural gas being present, and the test result coming back positive to $T$, we have the following probabilities:
+\begin{multicols}{2}
+$P(O)=0.5$\\
+$P(G \land \neg O)=0.2$\\
+$P(\neg G \land \neg O)=0.3$\\
+$P(T|O)=0.9$\\
+$P(T|G\land \neg O)=0.3$\\
+$P(T|\neg G\land\neg O)=0.1$
+\end{multicols}
+
+The probability of oil being present given that the test comes back positive can be written as
+\begin{align}
+P(O|T) &= \frac{P(T|O)P(O)}{P(T)}\\
+&= \frac{P(T|O)P(O)}{P(T|O)+P(T|\neg O)}\\
+&= \frac{P(T|O)P(O)}{P(T|O)+P(T|G\land\neg O)+P(T|\neg G\land\neg O)}\\
+&= \frac{0.9\times 0.5}{0.9 + 0.3 + 0.1}\\
+&\approx 30.7\%
+\end{align}
 \item 
 \item \begin{enumerate}
 \item
