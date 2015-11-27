@@ -44,17 +44,62 @@ $P(T|\neg G\land\neg O)=0.1$
 The probability of oil being present given that the test comes back positive can be written as
 \begin{align}
 P(O|T) &= \frac{P(T|O)P(O)}{P(T)}\\
-&= \frac{P(T|O)P(O)}{P(T|O)+P(T|\neg O)}\\
-&= \frac{P(T|O)P(O)}{P(T|O)+P(T|G\land\neg O)+P(T|\neg G\land\neg O)}\\
-&= \frac{0.9\times 0.5}{0.9 + 0.3 + 0.1}\\
-&\approx 30.7\%
+&= \frac{P(T|O)P(O)}{P(T|O)P(O)+P(T|G\land\neg O)P(G\land\neg O) + P(T|\neg G\land\neg O)P(\neg G\land\neg O)}\\
+&= \frac{0.6\times 0.5}{0.6\times 0.5 + 0.3\times 0.2 + 0.1\times0.3}\\
+&= 83.\overline{33}\%
 \end{align}
-\item 
+\item The condition of the random object being square is denoted by $S$, with circle being denoted by it's negation. Similarly, $O$ and $Y$ denote the condition of the object being labeled with a 1 and being the color yellow, respectively, with the negations denoting 2 and blue, respectively. \\
+
+\begin{table}[h]
+\centering \begin{tabular}{c | c c c | c}
+$w_i$ & $S$ & $O$ & $Y$ & $P(\cdot)$\\\hline
+1 & T & T & T & 2/13 \\
+2 & T & T & F & 1/13 \\
+3 & T & F & T & 4/13 \\
+4 & T & F & F & 1/13 \\
+5 & F & T & T & 1/13 \\
+6 & F & T & F & 1/13 \\
+7 & F & F & T & 2/13 \\
+8 & F & F & F & 1/13 \\
+\end{tabular}
+\end{table}
+Therefore, $P(\alpha_1)=P(w_1)+P(w_3)+P(w_5)+P(w_7)=9/13$. Similarly, $P(\alpha_2)=P(w_1)+P(w_2)+P(w_3)+P(w_4)=8/13$.
+\newpage
 \item \begin{enumerate}
-\item
-\item
-\item
-\item
+\item The Markovian assumptions asserted by the given directed acyclic graph are as follows.
+\begin{multicols}{2}
+\begin{itemize}
+\item $I(A,\emptyset,BE)$
+\item $I(B,\emptyset,AC)$
+\item $I(C,A,BDE)$
+\item $I(D,AB,CE)$
+\item $I(E,B,ACDFG)$
+\item $I(F,CD,ABE)$
+\item $I(G,F,ABCDEH)$
+\item $I(H,FE,ABCDG)$
+\end{itemize}
+\end{multicols}
+\item \begin{itemize}
+\item False, because the path $A\rightarrow D \rightarrow F \rightarrow H \rightarrow E$ is not blocked by valve $H$, because it is a a convergent valve and is contained in the knowledge base.
+\item False, because the path $G \rightarrow F \rightarrow C \rightarrow A \rightarrow D \rightarrow B \rightarrow E$ is not blocked by valve $D$ because it is a convergent valve and is contained in the knowledge base.
+\item False, because there exists the unblocked path $B \rightarrow E \rightarrow H$.
+\end{itemize}
+\item 
+\begin{align}
+P(a,b,c,d,e,f,g,h)&=P(a|b,c,d,e,f,g,h)\\
+&\times P(b|c,d,e,f,g,h)\\
+&\times P(c|d,e,f,g,h)\\
+&\times P(d|e,f,g,h)\\ 
+&\times P(e|f,g,h)\\
+&\times P(f|g,h)\\ 
+&\times P(g|h)\\
+&\times P(h)
+\end{align}
+
+\item \begin{itemize}
+\item $P(A=0,B=0)=P(A=0)P(B=0)=0.24$, because the joint probability is equal to the product of the marginals for independent variables.
+\item Because $A$ and $E$ are independent, $P(E=1|A=1)=P(E=1)$, which expands to $P(E=1)=P(E=1|B=0)P(B=0)P(E=1|B=1)P(B=1)=0.9\times 0.3+ 0.1\times 0.7=0.34$
+\end{itemize}
 \end{enumerate}
 \end{enumerate}
 
